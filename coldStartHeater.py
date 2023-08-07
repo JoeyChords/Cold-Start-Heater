@@ -1,10 +1,16 @@
-import datetime, time, webbrowser
+import datetime, logging, time, webbrowser
 from selenium import webdriver
 from dotenv import dotenv_values
 
 config = dotenv_values(".env")
 COLD_URL = config["COLD_URL"]
-LOG_PATH = config["LOG_PATH"]
+logging.basicConfig(filename="coldStartHeater.log", level=logging.INFO)
+timeStarted = datetime.datetime.now()
+logging.info(
+    timeStarted.strftime("%m/%d/%Y, %H:%M:%S")
+    + "   coldStartHeater started on "
+    + COLD_URL
+)
 
 while True:
     timeOfRequest = datetime.datetime.now()
@@ -13,24 +19,16 @@ while True:
         browser.get(COLD_URL)
         # TODO wait some amount of time
         # check something on the page with selenium. if it isn't there, raise exception.
-        coldStartHeaterLog = open(
-            LOG_PATH + "coldStartHeaterLog.txt",
-            "a",
-        )
-        coldStartHeaterLog.write(
+        logging.info(
             timeOfRequest.strftime("%m/%d/%Y, %H:%M:%S")
-            + "   Cold start successfully heated\n"
+            + "   Cold start at "
+            + COLD_URL
+            + " successfully heated"
         )
-        coldStartHeaterLog.close()
     except:
-        coldStartHeaterLog = open(
-            LOG_PATH + "coldStartHeaterLog.txt",
-            "a",
+        logging.exception(
+            timeOfRequest.strftime("%m/%d/%Y, %H:%M:%S") + "   Something went wrong"
         )
-        coldStartHeaterLog.write(
-            timeOfRequest.strftime("%m/%d/%Y, %H:%M:%S") + "   Something went wrong\n"
-        )
-        coldStartHeaterLog.close()
     time.sleep(810)
     browser.quit()
     time.sleep(30)
