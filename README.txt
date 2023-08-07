@@ -13,7 +13,5 @@ to do both of those here: https://pypi.org/project/selenium/
 You will also need to install python-dotenv and create a .env file. This page shows how to do that: 
 https://pypi.org/project/python-dotenv/
 
-Include two environment variables, COLD_URL and LOG_PATH, in your .env file. COLD_URL 
-is the web address for the site yu wish to keep running without cold starts.
-LOG_PATH is the location you choose for your log. It makes sense to put it in a 
-folder with the python script.
+Add COLD_URL=example.com to your .env file. COLD_URL 
+is the web address for the site you wish to keep running without cold starts.
